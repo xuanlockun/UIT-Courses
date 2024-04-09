@@ -64,6 +64,7 @@ def dl():
             hours, remainder = divmod(time_left.seconds, 3600)
             minutes, seconds = divmod(remainder, 60)
             print(f"Còn lại: {days} ngày, {hours} giờ, {minutes} phút, {seconds} giây")
+    print(f"-------------------------------")
 
 def help():
     print(f"dl : In ra deadline")

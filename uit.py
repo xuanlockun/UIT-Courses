@@ -3,11 +3,20 @@ import requests
 from datetime import datetime, timezone
 from bs4 import BeautifulSoup
 import ics
+import os
 
 session =None
+
 def dl():
-    username=input("Tai khoan: ")
-    password=input("Mat khau: ")
+    with open("account.txt", "r") as f:
+        lines = f.readlines()
+    if not lines:
+        username = input("Tai khoan: ")
+        password = input("Mat khau: ")
+        with open("account.txt", "w") as f:
+            f.write(f"{username}\n{password}")
+    else:
+        username, password = lines[0].strip(), lines[1].strip()
     url = "https://courses.uit.edu.vn/login/index.php"
     global session
     session = requests.session()
@@ -65,16 +74,32 @@ def dl():
             minutes, seconds = divmod(remainder, 60)
             print(f"Còn lại: {days} ngày, {hours} giờ, {minutes} phút, {seconds} giây")
     print(f"-------------------------------")
+    
 
 def help():
     print(f"dl : In ra deadline")
     print(f"Rawr nè :>")
+
+def version():
+    print(f"1.0")    
+
+def logout():
+    with open("account.txt", "w") as f:
+        f.write("")
+
+def hello():
+    print(f"_______________________________________")
+    print(f"|                                     |")
+    print(f"_______________________________________")
+    
 
 def main():
     if (sys.argv[1]=="dl"):
         dl()
     elif (sys.argv[1]=="help"):
         help()
+    elif (sys.argv[1]=="logout"):
+        logout()
     else:
         print(f"Sai lệnh rồi bro")
 
